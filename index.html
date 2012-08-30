@@ -1,0 +1,27 @@
+<html>
+<head>
+<link rel="stylesheet" href="./css.css" />
+
+</head>
+<body>
+<div id="count-up-timers">
+
+</div>
+<div class="lol"><button onclick="add_timer();">New Alarm</button></div>
+</body>
+<script>
+var count_up_timers = document.getElementById("count-up-timers");
+var timer_id = "a";
+var count = 0;
+var times = {};
+function add_timer() {
+	var id = timer_id + "" + count;
+	times[id] = 1;
+	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">0 seconds</div>";
+	setInterval(function() {
+		document.getElementById(id).innerHTML = times[id]++ + " seconds";
+	},1000);
+	count++;
+}
+</script>
+</html>
