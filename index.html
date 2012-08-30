@@ -14,12 +14,18 @@ var count_up_timers = document.getElementById("count-up-timers");
 var timer_id = "a";
 var count = 0;
 var times = {};
+var messages = {};
+function set_message(id) {
+ var message = prompt("Set Message", messages[id]);
+ messages[id] = message;
+}
 function add_timer() {
 	var id = timer_id + "" + count;
 	times[id] = 1;
-	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">0 seconds</div>";
+	messages[id] = "No Message Set";
+	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">0 seconds : No Message Set" + "<button onclick=\"set_message('" + id + "')\">Set</button>" + "</div>";
 	setInterval(function() {
-		document.getElementById(id).innerHTML = times[id]++ + " seconds";
+		document.getElementById(id).innerHTML = times[id]++ + " seconds : " + messages[id] + "<button onclick=\"set_message('" + id + "')\">Set</button>";
 	},1000);
 	count++;
 }
