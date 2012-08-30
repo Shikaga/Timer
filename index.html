@@ -15,18 +15,31 @@ var timer_id = "a";
 var count = 0;
 var times = {};
 var messages = {};
-function set_message(id) {
- var message = prompt("Set Message", messages[id]);
- messages[id] = message;
+var intervals = {};
+
+function delete_message(id) {
+  clearInterval(intervals[id]);
+  var element = document.getElementById(id);
+  element.parentNode.removeChild(element);
 }
+
+function set_message(id) {
+  var message = prompt("Set Message", messages[id]);
+  messages[id] = message;
+}
+
 function add_timer() {
 	var id = timer_id + "" + count;
 	times[id] = 1;
 	messages[id] = "No Message Set";
-	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">0 seconds : No Message Set" + "<button onclick=\"set_message('" + id + "')\">Set</button>" + "</div>";
-	setInterval(function() {
-		document.getElementById(id).innerHTML = times[id]++ + " seconds : " + messages[id] + "<button onclick=\"set_message('" + id + "')\">Set</button>";
+	var button_string = "<button onclick=\"set_message('" + id + "')\">Set</button>";
+	var delete_string = "<button onclick=\"delete_message('" + id + "')\">Delete</button>";
+	var inner_string = delete_string + "0 seconds : No Message Set" + button_string;
+	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">" + inner_string + "</div>";
+	var interval = setInterval(function() {
+		document.getElementById(id).innerHTML =  delete_string + times[id]++ + " seconds : " + messages[id] + button_string;
 	},1000);
+	intervals[id] = interval;
 	count++;
 }
 </script>
