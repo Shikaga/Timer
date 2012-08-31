@@ -39,11 +39,8 @@ function add_timer() {
 	var interval = setInterval(function() {
 		var hours = Math.floor(times[id] / 3600);
 		var minutes = Math.floor((times[id] - (hours * 3600)) / 60);
-		var seconds = times[id] % 60;
-		
-		
+		var seconds = times[id] % 60;	
 		document.getElementById(id).innerHTML =  delete_string + hours + " hours, " + minutes + " minutes, " + seconds + " seconds : " + messages[id] + button_string;
-		console.log(times[id]++);
 	},1000);
 	
 	intervals[id] = interval;
