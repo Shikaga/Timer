@@ -34,11 +34,18 @@ function add_timer() {
 	messages[id] = "No Message Set";
 	var button_string = "<button onclick=\"set_message('" + id + "')\">Set</button>";
 	var delete_string = "<button onclick=\"delete_message('" + id + "')\">Delete</button>";
-	var inner_string = delete_string + "0 seconds : No Message Set" + button_string;
+	var inner_string = delete_string + "0 hours, 0 minutes, 0 seconds : No Message Set" + button_string;
 	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">" + inner_string + "</div>";
 	var interval = setInterval(function() {
-		document.getElementById(id).innerHTML =  delete_string + times[id]++ + " seconds : " + messages[id] + button_string;
+		var hours = Math.floor(times[id] / 3600);
+		var minutes = Math.floor((times[id] - (hours * 3600)) / 60);
+		var seconds = times[id] % 60;
+		
+		
+		document.getElementById(id).innerHTML =  delete_string + hours + " hours, " + minutes + " minutes, " + seconds + " seconds : " + messages[id] + button_string;
+		console.log(times[id]++);
 	},1000);
+	
 	intervals[id] = interval;
 	count++;
 }
