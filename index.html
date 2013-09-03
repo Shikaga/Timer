@@ -1,51 +1,24 @@
 <html>
 <head>
-<link rel="stylesheet" href="./css.css" />
-
+	<link rel="stylesheet" href="./css.css" />
+	<script type="text/javascript" src="lib/knockout.js"></script>
+	<script type="text/javascript" src="lib/mustache.js"></script>
+	<script type="text/javascript" src="lib/ko.mustache.js"></script>
 </head>
 <body>
-<div id="count-up-timers">
+	<script id="entry-template" type="text/x-handlebars-template">
+		<div>
+			<span data-bind="text: timeString"></span>
+			<span data-bind="text: message"></span>
+			<button data-bind="click: setMessage">Set</button>
+			<button data-bind="click: deleteTimer">Delete</button>
+		</div>
+	</script>
+	<span data-bind="template: { name: 'entry-template', foreach: timers }"></span>
+	<div id="count-up-timers">
 
-</div>
-<div class="lol"><button onclick="add_timer();">New Alarm</button></div>
+	</div>
+	<div class="lol"><button onclick="add_timer();">New Alarm</button></div>
 </body>
-<script>
-var count_up_timers = document.getElementById("count-up-timers");
-var timer_id = "a";
-var count = 0;
-var times = {};
-var messages = {};
-var intervals = {};
-
-function delete_message(id) {
-  clearInterval(intervals[id]);
-  var element = document.getElementById(id);
-  element.parentNode.removeChild(element);
-}
-
-function set_message(id) {
-  var message = prompt("Set Message", messages[id]);
-  messages[id] = message;
-}
-
-function add_timer() {
-	var id = timer_id + "" + count;
-	times[id] = 1;
-	messages[id] = "No Message Set";
-	var button_string = "<button onclick=\"set_message('" + id + "')\">Set</button>";
-	var delete_string = "<button onclick=\"delete_message('" + id + "')\">Delete</button>";
-	var inner_string = delete_string + "0 hours, 0 minutes, 0 seconds : No Message Set" + button_string;
-	count_up_timers.innerHTML += "<div id=\"" + timer_id + count + "\">" + inner_string + "</div>";
-	var interval = setInterval(function() {
-		var hours = Math.floor(times[id] / 3600);
-		var minutes = Math.floor((times[id] - (hours * 3600)) / 60);
-		var seconds = times[id] % 60;	
-		document.getElementById(id).innerHTML =  delete_string + hours + " hours, " + minutes + " minutes, " + seconds + " seconds : " + messages[id] + button_string;
-		times[id]++;
-	},1000);
-	
-	intervals[id] = interval;
-	count++;
-}
-</script>
+<script type="text/javascript" src="js/main.js"></script>
 </html>
